@@ -45,3 +45,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 /android/app/google-services.json
+
+# firebase config (use flutterfire https://firebase.flutter.dev/docs/cli/)
+firebase_options.dart 

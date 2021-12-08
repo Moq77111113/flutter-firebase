@@ -6,15 +6,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:myapp/page/home_page.dart';
+import 'package:myapp/page/startup.dart';
 import 'package:myapp/provider/google_auth.dart';
+import 'package:myapp/provider/notifications_service.dart';
+import 'package:myapp/provider/stopwatch_service.dart';
 import 'package:provider/provider.dart';
-
+import 'firebase_options.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   runApp(const MyApp());
 }
 
@@ -22,20 +24,14 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => ChangeNotifierProvider(
-      create: (context) => GoogleSignInProvider(),
-      child: MaterialApp(
-          title: 'Hell0', theme: ThemeData.dark(), home: const MainPage()));
-}
-
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
-
-  @override
-  _MainPageState createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  @override
-  Widget build(BuildContext context) => const Scaffold(body: HomePage());
+  Widget build(BuildContext context) => MultiProvider(
+          child: MaterialApp(
+              title: 'Vouvry',
+              theme: ThemeData.dark(),
+              home: const StartupPage()),
+          providers: [
+            ChangeNotifierProvider(create: (context) => GoogleSignInProvider()),
+            ChangeNotifierProvider(create: (_) => NotificationService()),
+            ChangeNotifierProvider(create: (_) => StopWatchService())
+          ]);
 }

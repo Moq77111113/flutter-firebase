@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/widgets/profile.dart';
 import 'package:myapp/widgets/sign_up.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+import 'wrapper.dart';
+
+class StartupPage extends StatelessWidget {
+  const StartupPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -16,7 +17,7 @@ class HomePage extends StatelessWidget {
             } else if (snapshot.hasError) {
               return const Center(child: Text('An error occured'));
             } else if (snapshot.hasData) {
-              return const ProfileWidget();
+              return const WrapperPage();
             } else {
               return const SignUpWidget();
             }
